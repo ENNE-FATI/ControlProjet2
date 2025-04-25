@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Graphique dynamique des étudiants par filière</title>
+  <!-- Build UMD : définit window.Chart -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      font-family: sans-serif;
+      background: #f5f5f5;
+    }
+    #chart-container {
+      width: 600px;
+      max-width: 100%;
+      background: white;
+      padding: 1rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      border-radius: 0.5rem;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="chart-container">
+    <canvas id="myChart"></canvas>
+  </div>
+
+  <script>
+    // Dès que le DOM est prêt...
+    document.addEventListener('DOMContentLoaded', () => {
+      // 1. Appel au service REST
+      fetch('http://localhost:8981/web/EtudiantController')
+        .then(response => {
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+          return response.json();
+        })
+        .then(data => {
+          // 2. Extraction des labels et des valeurs
+          const labels = data.map(item => item.code);
+          const valeurs = data.map(item => item.nbEtudiants);
+
+          // 3. Initialisation du canvas
+          const ctx = document.getElementById('myChart').getContext('2d');
+
+          // 4. Création du graphique
+          new Chart(ctx, {
+            type: 'bar',  // ou 'line' si vous préférez une courbe
+            data: {
+              labels: labels,
+              datasets: [{
+                label: 'Nombre d\'étudiants',
+                data: valeurs,
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                borderColor:   'rgb(75, 192, 192)',
+                borderWidth: 1
+              }]
+            },
+            options: {
+              responsive: true,
+              plugins: {
+                title: {
+                  display: true,
+                  text: 'Étudiants par filière'
+                },
+                legend: {
+                  display: false
+                }
+              },
+              scales: {
+                y: {
+                  beginAtZero: true,
+                  ticks: { stepSize: 1 }
+                }
+              }
+            }
+          });
+        })
+        .catch(err => {
+          console.error('Erreur de chargement des données :', err);
+          const container = document.getElementById('chart-container');
+          container.innerHTML = '<p style="color:red;">Impossible de charger les données.</p>';
+        });
+    });
+  </script>
+
+</body>
+</html>
