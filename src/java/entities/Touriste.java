@@ -17,8 +17,9 @@ import org.hibernate.annotations.NamedQuery;
  */
 @Entity
 @NamedQueries({  
-    @NamedQuery(name = "findByEmail", query = "from Touriste where email = :email")
+    @NamedQuery(name = "findTouristeByEmail", query = "SELECT d FROM Touriste d WHERE d.email = :email")
 })
+
 public class Touriste extends User {
    
    @OneToMany(mappedBy = "touriste")

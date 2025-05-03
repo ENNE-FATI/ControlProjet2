@@ -1,10 +1,10 @@
 <%-- 
-    Document   : UserDashbord
-    Created on : 18 avr. 2025, 18:19:53
+    Document   : ReservationStatique
+    Created on : 26 avr. 2025, 01:41:23
     Author     : pc
 --%>
 
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>

@@ -202,12 +202,13 @@
 
                     <!-- Formulaire de connexion -->
                     <form action="../LoginController" method="post">
-                        
-                        <% if (request.getAttribute("error") != null) {%>
-                        <div class="error"><%= request.getAttribute("error")%></div>
+
+                        <% if (request.getAttribute("msg") != null) {%>
+                        <div class="alert alert-danger text-center"><%= request.getAttribute("msg")%></div>
                         <% }%>
+
                         <!-- Champ Nom -->
-                      
+
 
                         <!-- Champ Email -->
                         <div class="mb-3">
@@ -218,7 +219,7 @@
                         <!-- Champ Mot de passe -->
                         <div class="mb-3">
                             <label for="password" class="form-label">Mot de passe</label>
-                           <input type="password" class="form-control" id="password" name="motDePasse" placeholder="Votre mot de passe" required>
+                            <input type="password" class="form-control" id="password" name="password" placeholder="Votre mot de passe" required>
 
                         </div>
 

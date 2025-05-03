@@ -9,6 +9,9 @@ import dao.UserDao;
 import entities.Admin;
 import entities.User;
 import java.util.List;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+import util.HibernateUtil;
 
 /**
  *
@@ -47,9 +50,30 @@ public class UserService implements IService<User> {
         return ud.findById(id);
     }
     
-    public List<User> findByEmail(String email) {
-        return ud.findByEmail(email);
+    public User findByEmail(String email) {
+    Session session = null;
+    Transaction tx = null;
+    User user = null;
+
+    try {
+        session = HibernateUtil.getSessionFactory().openSession();
+        tx = session.beginTransaction();
+
+        user = (User) session
+                .getNamedQuery("User.findByEmail")
+                .setParameter("email", email)
+                .uniqueResult();
+
+        tx.commit();
+    } catch (Exception e) {
+        if (tx != null) tx.rollback();
+    } finally {
+        if (session != null) session.close();
     }
+
+  
+        return user;
+}
    
    public Admin adminLogin(String email, String motDePasse) {
     List<User> users = ud.findByEmail(email);

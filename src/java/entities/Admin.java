@@ -5,13 +5,17 @@
  */
 package entities;
 
+import java.util.logging.Logger;
 import javax.persistence.Entity;
+import org.hibernate.annotations.NamedQuery;
 
 /**
  *
  * @author FATI
  */
 @Entity
+@NamedQuery(name = "findAdminByEmail", query = "SELECT a FROM Admin a WHERE a.email = :email")
+
 public class Admin extends User{
 
     public Admin() {
@@ -20,4 +24,6 @@ public class Admin extends User{
     public Admin(String nom, String email, String motDePasse) {
         super(nom, email, motDePasse);
     }   
+    
+   
 }

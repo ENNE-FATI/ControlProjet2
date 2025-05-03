@@ -8,8 +8,25 @@ import javax.persistence.*;
     @NamedQuery(
         name = "findNamesByDate",
         query = "SELECT r.touriste.nom, r.activite.nom FROM ReservationActivity r WHERE r.reservationDate = :date"
+    ),
+    @NamedQuery(
+        name = "ReservationActivity.findByTouriste",
+        query = "SELECT r FROM ReservationActivity r WHERE r.touriste = :touriste"
+    ),
+    @NamedQuery(
+        name = "ReservationActivity.findByActivite", 
+        query = "SELECT r FROM ReservationActivity r WHERE r.activite = :activite"
+    ),
+    @NamedQuery(
+        name = "ReservationActivity.findByDate",
+        query = "SELECT r FROM ReservationActivity r WHERE r.reservationDate = :date"
+    ),
+    @NamedQuery(
+        name = "ReservationActivity.findByActiviteAndDate",
+        query = "SELECT r FROM ReservationActivity r WHERE r.activite = :activite AND r.reservationDate = :date"
     )
 })
+
 @Table(name = "reservations")
 
 public class ReservationActivity {

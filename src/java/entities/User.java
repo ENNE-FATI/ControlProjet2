@@ -38,7 +38,6 @@ public class User {
         this.email = email;
         this.motDePasse = motDePasse;
     }
-
    
     public int getId() {
         return id;

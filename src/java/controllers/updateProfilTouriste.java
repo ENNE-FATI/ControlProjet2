@@ -3,10 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package controllers;
 
-import entities.User;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -14,19 +12,14 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import services.UserService;
 
+/**
+ *
+ * @author pc
+ */
+@WebServlet(name = "updateProfilTouriste", urlPatterns = {"/updateProfilTouriste"})
+public class updateProfilTouriste extends HttpServlet {
 
- 
-@WebServlet(name = "UserController", urlPatterns = {"/UserController"})
-public class UserController extends HttpServlet {
-        private UserService us;
-        
-        @Override
-        public void init() throws ServletException {
-            super.init(); //To change body of generated methods, choose Tools | Templates.
-            us = new UserService();
-    }
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -38,33 +31,18 @@ public class UserController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        String op = request.getParameter("op");
-        if (op == null) {
-            String id = request.getParameter("id");
-            if (id == null || id.isEmpty()) {
-                String nom = request.getParameter("nom");
-                String email = request.getParameter("email");
-                String mdp = request.getParameter("mdp");
-                us.create(new User(nom, email, mdp));
-                response.sendRedirect("userspages/AdminDashbord.jsp");
-            }else{
-                String nom = request.getParameter("nom");
-                String email = request.getParameter("email");
-                String mdp = request.getParameter("mdp");
-                User u = new User(nom, email, mdp);
-                u.setId(Integer.parseInt(id));
-                us.update(u);
-                response.sendRedirect("userspages/AdminDashbord.jsp");
-            }
-        } else if (op.equals("delete")) {
-            String id = request.getParameter("id");
-            us.delete(us.findById(Integer.parseInt(id)));
-            response.sendRedirect("users/users.jsp");
-        } else if (op.equals("update")) {
-            String id = request.getParameter("id");
-            User u = us.findById(Integer.parseInt(id));
-            response.sendRedirect("userspages/AdminDashbord.jsp?id=" + u.getId() + "&nom=" + u.getNom() + "&email=" + u.getEmail() +"&mdp=" + u.getMotDePasse());
+        response.setContentType("text/html;charset=UTF-8");
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet updateProfilTouriste</title>");            
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet updateProfilTouriste at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
         }
     }
 

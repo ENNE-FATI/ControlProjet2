@@ -9,6 +9,10 @@ import dao.TouristeDao;
 import dao.UserDao;
 import entities.Touriste;
 import java.util.List;
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+import util.HibernateUtil;
 
 /**
  *
@@ -46,5 +50,34 @@ public class TouristeService implements IService<Touriste> {
     public boolean update(Touriste o) {
         return td.update(o);
     }
-    
+   public Touriste findTouristeByEmail(String email) {
+    Session session = null;
+    Transaction tx = null;
+    Touriste touriste = null;
+    try {
+        session = HibernateUtil.getSessionFactory().openSession();
+        tx = session.beginTransaction();
+        System.out.println("Recherche touriste avec email : " + email);
+        touriste = (Touriste) session.getNamedQuery("findTouristeByEmail")
+                                   .setParameter("email", email)
+                                   .uniqueResult();
+        tx.commit();
+        
+        if (touriste != null) {
+            System.out.println("Touriste trouvé : " + touriste.getEmail()); 
+        } else {
+            System.out.println("Aucun touriste trouvé avec l'email : " + email); 
+        }
+    } catch (HibernateException ex) {
+        if (tx != null) {
+            tx.rollback();
+        }
+        ex.printStackTrace();
+    } finally {
+        if (session != null) {
+            session.close();
+        }
+    }
+    return touriste;
+}
 }
