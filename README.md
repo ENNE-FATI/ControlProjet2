@@ -61,3 +61,13 @@ En résumé, cette application vise à améliorer l’expérience de réservatio
 ![Insertion des données dans les tables](https://github.com/ENNE-FATI/GestionDesActivites/blob/main/src/java/images/Requetes4.PNG)
 ![Selection des données dans les table](https://github.com/ENNE-FATI/GestionDesActivites/blob/main/src/java/images/Requetes5.PNG)
 ![Selection des données dans les table](https://github.com/ENNE-FATI/GestionDesActivites/blob/main/src/java/images/Requetes6.PNG)
+
+
+## 🎥 Vidéo de Démonstration  
+Vous pouvez visionner la vidéo de démonstration ici :  
+
+
+https://github.com/user-attachments/assets/ce6661f0-12b1-47d9-b66c-25bfdf408525
+
+
+
