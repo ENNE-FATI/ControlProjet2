@@ -2,6 +2,11 @@
 <%@page import="entities.Touriste"%>
 <%@page import="entities.Touriste"%>
 <%
+    response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+    response.setHeader("Pragma", "no-cache");
+    response.setDateHeader("Expires", 0);
+%>
+<%
     // Récupérer le touriste connecté depuis la session
     Touriste touriste = (Touriste) session.getAttribute("touriste");
     String nomComplet = "";
