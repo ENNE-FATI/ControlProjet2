@@ -7,7 +7,9 @@ package services;
 
 import dao.ActivityTouristeDao;
 import entities.ActiviteTouristique;
+import java.util.ArrayList;
 import java.util.List;
+import mapper.ActiviteLieuCount;
 
 /**
  *
@@ -46,5 +48,13 @@ public class ActivityService implements IService<ActiviteTouristique> {
         return activityDao.findById(id);
     }
     
+    public List<ActiviteLieuCount> getReservationsByLieu() {
+        List<Object[]> results = activityDao.countReservationsByLieu();
+        List<ActiviteLieuCount> stats = new ArrayList<>();
+        for (Object[] row : results) {
+            stats.add(new ActiviteLieuCount((String) row[0], (Long) row[1]));
+        }
+        return stats;
+    }
     
 }

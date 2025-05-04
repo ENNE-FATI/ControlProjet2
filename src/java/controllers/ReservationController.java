@@ -148,4 +148,5 @@ public class ReservationController extends HttpServlet {
     public String getServletInfo() {
         return "Contrôleur de réservation (version simplifiée)";
     }
+    
 }

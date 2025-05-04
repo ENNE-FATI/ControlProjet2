@@ -78,4 +78,5 @@ public class ActivitiesController extends HttpServlet {
     public String getServletInfo() {
         return "Activities Controller";
     }
+    
 }

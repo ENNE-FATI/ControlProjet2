@@ -16,5 +16,9 @@ public class AdminDao extends AbstractDao<Admin> {
     public AdminDao() {
         super(Admin.class);
     }
+
+    public Admin findByEmail(String email) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
 }

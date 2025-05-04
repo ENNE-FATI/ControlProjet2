@@ -31,15 +31,19 @@ public class LogoutController extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        
-        HttpSession session = request.getSession(); // Récupère la session s'il y en a une
-        session.invalidate(); // Détruit la session
-        response.sendRedirect("userspages/Connexion.jsp"); // Redirection vers la page de login
-    }
-
+   protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+    throws ServletException, IOException {
+    response.setContentType("text/html;charset=UTF-8");
+    
+    // Ajouter des en-têtes pour empêcher la mise en cache
+    response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1
+    response.setHeader("Pragma", "no-cache"); // HTTP 1.0
+    response.setDateHeader("Expires", 0); // Proxies
+    
+    HttpSession session = request.getSession(); // Récupère la session s'il y en a une
+    session.invalidate(); // Détruit la session
+    response.sendRedirect("userspages/Connexion.jsp"); // Redirection vers la page de login
+}
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.

@@ -1,4 +1,10 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%
+    response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+    response.setHeader("Pragma", "no-cache");
+    response.setDateHeader("Expires", 0);
+%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -29,7 +35,7 @@
                 min-height: 100vh;
             }
 
-            /* Sidebar - Cohérent avec la page d'activités */
+            /* Sidebar */
             .sidebar {
                 width: var(--sidebar-width);
                 background: white;
@@ -125,23 +131,6 @@
                 margin-bottom: 1rem;
             }
 
-            .profile-avatar-edit {
-                position: absolute;
-                bottom: 30px;
-                right: calc(50% - 60px);
-                background: white;
-                width: 40px;
-                height: 40px;
-                border-radius: 50%;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-                cursor: pointer;
-                color: var(--primary-color);
-                border: none;
-            }
-
             .profile-body {
                 padding: 2rem;
             }
@@ -201,15 +190,18 @@
             .btn-primary {
                 background-color: var(--primary-color);
                 border-color: var(--primary-color);
+                color: white;
             }
 
             .btn-primary:hover {
                 background-color: #3a56e8;
                 border-color: #3a56e8;
+                color: white;
             }
 
             .btn-outline-secondary {
                 border-color: #ddd;
+                color: #555;
             }
 
             .btn-outline-secondary:hover {
@@ -244,7 +236,7 @@
             <!-- Sidebar -->
             <div class="sidebar">
                 <div class="sidebar-header">
-                    <h4><i class="fas fa-compass" style="color: var(--primary-color)"></i> TourAdmin</h4>
+                    <h4><i class="fas fa-compass" style="color: var(--primary-color)"></i> ZahraMotion</h4>
                 </div>
                 <div class="sidebar-menu">
                     <a href="Route?page=admin">
@@ -261,147 +253,90 @@
                     </a>
                 </div>
                 <div class="sidebar-footer">
-                    <a href="Route?page=deconnexion" class="btn btn-outline-primary w-100">
-                        <i class="fas fa-sign-out-alt"></i> Déconnexion
-                    </a>
-                </div>
+            <a href="LogoutController" class="btn btn-outline-primary w-100">
+                <i class="fas fa-sign-out-alt"></i> Déconnexion
+            </a>
+        </div>
             </div>
 
             <!-- Main Content -->
             <div class="main-content">
                 <div class="profile-card">
-                    <!-- En-tête du profil -->
-                    <div class="profile-header">
-                        <img src="https://ui-avatars.com/api/?name=Admin&background=random&color=fff" alt="Avatar" class="profile-avatar">
-                        <button class="profile-avatar-edit">
-                            <i class="fas fa-camera"></i>
-                        </button>
-                        <h3>Administrateur</h3>
-                        <p class="text-white-50">Compte administrateur</p>
-                    </div>
+                    <form action="AdminProfilController" method="POST">
+                        <!-- Messages d'erreur/succès -->
+                        <c:if test="${not empty success}">
+                            <div class="alert alert-success">${success}</div>
+                        </c:if>
+                        <c:if test="${not empty error}">
+                            <div class="alert alert-danger">${error}</div>
+                        </c:if>
 
-                    <!-- Corps du profil -->
-                    <div class="profile-body">
-                        <!-- Section Informations personnelles -->
-                        <div class="mb-4">
-                            <h5 class="section-title">
-                                <i class="fas fa-user-circle mr-2"></i>Informations personnelles
-                            </h5>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label class="form-label">Nom</label>
-                                        <input type="text" class="form-control" value="Dupont">
-                                    </div>
+                        <!-- En-tête du profil -->
+                        <div class="profile-header">
+                            <img src="https://ui-avatars.com/api/?name=${admin.nom}&background=random&color=fff" 
+                                 alt="Avatar" class="profile-avatar">
+                            <h3>${admin.nom}</h3>
+                            <p class="text-white-50">Compte administrateur</p>
+                        </div>
+
+                        <!-- Corps du profil -->
+                        <div class="profile-body">
+                            <!-- Section Informations personnelles -->
+                            <div class="mb-4">
+                                <h5 class="section-title">
+                                    <i class="fas fa-user-circle mr-2"></i>Informations personnelles
+                                </h5>
+                                <div class="form-group">
+                                    <label class="form-label">Nom</label>
+                                    <input type="text" class="form-control" name="nom" value="${admin.nom}" required>
                                 </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label class="form-label">Prénom</label>
-                                        <input type="text" class="form-control" value="Jean">
-                                    </div>
+                                <div class="form-group">
+                                    <label class="form-label">Email</label>
+                                    <input type="email" class="form-control" name="email" value="${admin.email}" required>
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <label class="form-label">Email</label>
-                                <input type="email" class="form-control" value="admin@tourisme.com">
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label class="form-label">Téléphone</label>
-                                        <input type="tel" class="form-control" value="+33 6 12 34 56 78">
-                                    </div>
+
+                            <!-- Section Sécurité -->
+                            <div class="mb-4">
+                                <h5 class="section-title">
+                                    <i class="fas fa-lock mr-2"></i>Changer le mot de passe
+                                </h5>
+                                <div class="form-group">
+                                    <label class="form-label">Mot de passe actuel</label>
+                                    <input type="password" class="form-control" name="currentPassword" placeholder="Entrez votre mot de passe actuel">
                                 </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label class="form-label">Rôle</label>
-                                        <input type="text" class="form-control" value="Administrateur" disabled>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="form-label">Nouveau mot de passe</label>
+                                            <input type="password" class="form-control" name="newPassword" placeholder="Nouveau mot de passe">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="form-label">Confirmer le mot de passe</label>
+                                            <input type="password" class="form-control" name="confirmPassword" placeholder="Confirmer le mot de passe">
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Section Sécurité -->
-                        <div class="mb-4">
-                            <h5 class="section-title">
-                                <i class="fas fa-lock mr-2"></i>Sécurité du compte
-                            </h5>
-                            <div class="form-group">
-                                <label class="form-label">Mot de passe actuel</label>
-                                <input type="password" class="form-control" placeholder="Entrez votre mot de passe actuel">
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label class="form-label">Nouveau mot de passe</label>
-                                        <input type="password" class="form-control" placeholder="Nouveau mot de passe">
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label class="form-label">Confirmer le mot de passe</label>
-                                        <input type="password" class="form-control" placeholder="Confirmer le mot de passe">
-                                    </div>
-                                </div>
-                            </div>
+                        <!-- Actions -->
+                        <div class="profile-actions">
+                            <button type="reset" class="btn btn-outline-secondary">
+                                <i class="fas fa-times mr-1"></i> Annuler
+                            </button>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save mr-1"></i> Enregistrer les modifications
+                            </button>
                         </div>
-
-                        <!-- Section Préférences -->
-                        <div class="mb-4">
-                            <h5 class="section-title">
-                                <i class="fas fa-cog mr-2"></i>Préférences
-                            </h5>
-                            <div class="form-group">
-                                <label class="form-label">Langue</label>
-                                <select class="form-control">
-                                    <option>Français</option>
-                                    <option>Anglais</option>
-                                    <option>Espagnol</option>
-                                </select>
-                            </div>
-                            <div class="form-group form-check">
-                                <input type="checkbox" class="form-check-input" id="notifications" checked>
-                                <label class="form-check-label" for="notifications">Recevoir les notifications par email</label>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Actions -->
-                    <div class="profile-actions">
-                        <button class="btn btn-outline-secondary">
-                            <i class="fas fa-times mr-1"></i> Annuler
-                        </button>
-                        <button class="btn btn-primary">
-                            <i class="fas fa-save mr-1"></i> Enregistrer les modifications
-                        </button>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>
 
         <!-- Bootstrap Bundle with Popper -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-        
-        <script>
-            // Script pour l'upload d'avatar (exemple)
-            document.querySelector('.profile-avatar-edit').addEventListener('click', function() {
-                const input = document.createElement('input');
-                input.type = 'file';
-                input.accept = 'image/*';
-                
-                input.onchange = e => {
-                    const file = e.target.files[0];
-                    if (file) {
-                        const reader = new FileReader();
-                        reader.onload = function(event) {
-                            document.querySelector('.profile-avatar').src = event.target.result;
-                        };
-                        reader.readAsDataURL(file);
-                    }
-                };
-                
-                input.click();
-            });
-        </script>
     </body>
 </html>

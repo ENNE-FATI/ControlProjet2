@@ -1,6 +1,11 @@
 <%@page import="entities.Guide"%>
 <%@page import="services.GuideService"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%
+    response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+    response.setHeader("Pragma", "no-cache");
+    response.setDateHeader("Expires", 0);
+%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -315,7 +320,7 @@
             <!-- Sidebar -->
             <div class="sidebar">
                 <div class="sidebar-header">
-                    <h4><i class="fas fa-compass" style="color: var(--primary-color)"></i> TourAdmin</h4>
+                    <h4><i class="fas fa-compass" style="color: var(--primary-color)"></i> ZahraMotion</h4>
                 </div>
                 <div class="sidebar-menu">
                     <a href="Route?page=admin">
@@ -332,7 +337,7 @@
                     </a>
                 </div>
                 <div class="sidebar-footer">
-                    <a href="Route?page=deconnexion" class="btn btn-outline-primary w-100">
+                    <a href="LogoutController" class="btn btn-outline-primary w-100">
                         <i class="fas fa-sign-out-alt"></i> Déconnexion
                     </a>
                 </div>

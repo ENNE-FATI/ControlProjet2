@@ -80,7 +80,10 @@ public class Route extends HttpServlet {
                 }
                 request.getRequestDispatcher("userspages/reserver.jsp").forward(request, response);
                 break;
-
+// Add this case to your switch statement in the Route servlet
+case "profil":
+    request.getRequestDispatcher("userspages/TouristeProfil.jsp").forward(request, response);
+    break;
             case "guides":
                 List<Guide> guides = gs.findAll();
                 request.setAttribute("guides", guides);
@@ -111,10 +114,7 @@ public class Route extends HttpServlet {
                 }
                 request.getRequestDispatcher("userspages/ajouterGuide.jsp").forward(request, response);
                 break;
-            case "deconnexion":
-                request.getRequestDispatcher("userspages/Connexion.jsp").forward(request, response);
-                break;
-
+           
         }
 
     }

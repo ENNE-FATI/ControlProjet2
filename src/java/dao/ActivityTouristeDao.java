@@ -42,5 +42,22 @@ public class ActivityTouristeDao extends AbstractDao<ActiviteTouristique> {
         }
         return activites;
     }
-
+    public List<Object[]> countReservationsByLieu() {
+        Session session = null;
+        Transaction tx = null;
+        List<Object[]> stats = null;
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            tx = session.beginTransaction();
+            stats = session.getNamedQuery("ActiviteTouristique.countReservationsByLieu").list();
+            tx.commit();
+        } catch (HibernateException e) {
+            if (tx != null) tx.rollback();
+            throw e;
+        } finally {
+            if (session != null) session.close();
+        }
+        return stats;
+    }
+    
 }

@@ -19,8 +19,14 @@ import org.hibernate.annotations.NamedQuery;
 
 @Entity
 @NamedQueries({
-    @NamedQuery(name = "findBetweenPrix", query = "from ActiviteTouristique where prix between :p1 and :p2")
-
+    @NamedQuery(name = "findBetweenPrix", query = "from ActiviteTouristique where prix between :p1 and :p2"),
+    @NamedQuery(
+        name = "ActiviteTouristique.countReservationsByLieu",
+        query = "SELECT a.lieu AS lieuName, COUNT(r) AS reservationCount " +
+                "FROM ActiviteTouristique a LEFT JOIN a.reservations r " +
+                "GROUP BY a.lieu " +
+                "ORDER BY reservationCount DESC"
+    )
 })
 /**
  *

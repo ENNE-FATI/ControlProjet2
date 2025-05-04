@@ -191,6 +191,10 @@
     <a href="Route?page=activitesTouriste" class="nav-item"><i class="fas fa-map-marked-alt"></i><span>Activités</span></a>
     <a href="MesReservationController" class="nav-item active"><i class="fas fa-calendar-check"></i><span>Réservations</span></a>
     <a href="Route?page=profil" class="nav-item"><i class="fas fa-user"></i><span>Profil</span></a>
+    <a href="LogoutController" class="nav-item">
+    <i class="fas fa-sign-out-alt"></i>
+    <span>Déconnexion</span>
+</a>
 </nav>
 
 <main class="main-content">

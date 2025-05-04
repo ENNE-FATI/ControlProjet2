@@ -222,7 +222,7 @@
             <div class="sidebar">
                 <div class="sidebar-header">
                     <img src="https://via.placeholder.com/40x40/4361ee/ffffff?text=TR" alt="Logo" class="logo">
-                    <h4>TourReserve</h4>
+                    <h4>ZahraMotion</h4>
                 </div>
                 <div class="sidebar-menu">
                     <a href="Route?page=admin">

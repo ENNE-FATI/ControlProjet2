@@ -1,4 +1,10 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="entities.Touriste"%>
+<%
+    response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+    response.setHeader("Pragma", "no-cache");
+    response.setDateHeader("Expires", 0);
+%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -11,22 +17,15 @@
             :root {
                 --primary-color: #00A896;
                 --secondary-color: #02C39A;
-                --accent-color: #F0F3BD;
-                --dark-color: #05668D;
                 --light-color: #F7F9FC;
-                --text-color: #333333;
-                --card-bg: #FFFFFF;
             }
             
             body {
                 font-family: 'Poppins', sans-serif;
                 background-color: var(--light-color);
-                color: var(--text-color);
-                line-height: 1.6;
             }
             
-            /* Navigation Verticale */
-            .nav-vertical {
+             .nav-vertical {
                 width: 100px;
                 background: linear-gradient(180deg, var(--primary-color), var(--secondary-color));
                 position: fixed;
@@ -79,250 +78,58 @@
                 background-color: var(--accent-color);
             }
             
-            /* Main Content */
             .main-content {
                 margin-left: 100px;
-                padding: 2rem 3rem;
+                padding: 2rem;
             }
             
-            /* Header */
-            .profile-header {
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                margin-bottom: 2rem;
-            }
-            
-            .page-title h1 {
-                font-size: 2rem;
-                font-weight: 700;
-                color: var(--dark-color);
-                margin-bottom: 0.5rem;
-            }
-            
-            .page-title p {
-                color: #666;
-                font-size: 1rem;
-            }
-            
-            /* Profile Layout */
-            .profile-container {
-                display: grid;
-                grid-template-columns: 300px 1fr;
-                gap: 2rem;
-            }
-            
-            /* Sidebar Profil */
-            .profile-sidebar {
-                background: var(--card-bg);
+            .profile-card {
+                background: white;
                 border-radius: 15px;
                 box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
                 padding: 2rem;
-                height: fit-content;
-                position: sticky;
-                top: 2rem;
+                max-width: 800px;
+                margin: 0 auto;
+            }
+            
+            .profile-header {
+                background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+                color: white;
+                padding: 2rem;
+                text-align: center;
+                border-radius: 12px 12px 0 0;
             }
             
             .profile-avatar {
-                width: 150px;
-                height: 150px;
+                width: 120px;
+                height: 120px;
                 border-radius: 50%;
-                background-color: var(--primary-color);
-                margin: 0 auto 1.5rem;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                color: white;
-                font-size: 3rem;
-                font-weight: bold;
-                overflow: hidden;
-                border: 5px solid var(--accent-color);
-            }
-            
-            .profile-avatar img {
-                width: 100%;
-                height: 100%;
-                object-fit: cover;
-            }
-            
-            .profile-info {
-                text-align: center;
-                margin-bottom: 2rem;
-            }
-            
-            .profile-name {
-                font-size: 1.5rem;
-                font-weight: 600;
-                margin-bottom: 0.5rem;
-            }
-            
-            .profile-location {
-                color: #666;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                gap: 0.5rem;
-                margin-bottom: 1.5rem;
-            }
-            
-            .profile-stats {
-                display: flex;
-                justify-content: space-around;
-                margin-bottom: 2rem;
-            }
-            
-            .stat-item {
-                text-align: center;
-            }
-            
-            .stat-value {
-                font-size: 1.3rem;
-                font-weight: 700;
-                color: var(--dark-color);
-            }
-            
-            .stat-label {
-                font-size: 0.8rem;
-                color: #666;
-            }
-            
-            .profile-menu {
-                list-style: none;
-                padding: 0;
-                margin: 0;
-            }
-            
-            .profile-menu li {
-                margin-bottom: 0.5rem;
-            }
-            
-            .profile-menu a {
-                display: block;
-                padding: 0.8rem 1rem;
-                border-radius: 8px;
-                color: #555;
-                text-decoration: none;
-                transition: all 0.2s;
-                display: flex;
-                align-items: center;
-                gap: 0.8rem;
-            }
-            
-            .profile-menu a:hover, .profile-menu a.active {
-                background-color: rgba(0, 168, 150, 0.1);
-                color: var(--primary-color);
-                font-weight: 500;
-            }
-            
-            .profile-menu i {
-                width: 20px;
-                text-align: center;
-            }
-            
-            /* Profile Content */
-            .profile-content {
-                background: var(--card-bg);
-                border-radius: 15px;
-                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-                padding: 2rem;
-            }
-            
-            .section-title {
-                font-size: 1.3rem;
-                font-weight: 600;
-                margin-bottom: 1.5rem;
-                color: var(--dark-color);
-                display: flex;
-                align-items: center;
-                gap: 0.8rem;
-            }
-            
-            .section-title i {
-                color: var(--primary-color);
+                margin: 0 auto 1rem;
             }
             
             .form-group {
                 margin-bottom: 1.5rem;
             }
             
-            .form-label {
-                display: block;
-                margin-bottom: 0.5rem;
-                font-weight: 500;
-                color: #555;
-            }
-            
-            .form-control {
-                width: 100%;
-                padding: 0.8rem 1rem;
-                border: 1px solid #ddd;
-                border-radius: 8px;
-                font-size: 1rem;
-                transition: all 0.2s;
-            }
-            
-            .form-control:focus {
-                border-color: var(--primary-color);
-                outline: none;
-                box-shadow: 0 0 0 3px rgba(0, 168, 150, 0.1);
-            }
-            
             .btn-save {
                 background-color: var(--primary-color);
                 color: white;
-                border: none;
-                padding: 0.8rem 1.5rem;
-                border-radius: 8px;
-                font-weight: 500;
-                font-size: 1rem;
-                cursor: pointer;
-                transition: all 0.2s;
             }
             
             .btn-save:hover {
-                background-color: var(--dark-color);
+                background-color: #008672;
+                color: white;
             }
             
-            /* Responsive */
-            @media (max-width: 992px) {
-                .profile-container {
-                    grid-template-columns: 1fr;
-                }
-                
-                .profile-sidebar {
-                    position: static;
-                }
-            }
-            
-            @media (max-width: 768px) {
-                .nav-vertical {
-                    width: 100%;
-                    height: auto;
-                    bottom: 0;
-                    top: auto;
-                    flex-direction: row;
-                    justify-content: space-around;
-                    padding: 0.5rem 0;
-                }
-                
-                .main-content {
-                    margin-left: 0;
-                    margin-bottom: 80px;
-                    padding: 1.5rem;
-                }
-                
-                .profile-header {
-                    flex-direction: column;
-                    align-items: flex-start;
-                    gap: 1rem;
-                }
+            .alert {
+                transition: opacity 0.5s ease-out;
             }
         </style>
     </head>
     <body>
         <!-- Navigation Verticale -->
-          <nav class="nav-vertical">
-            <a href="Route?page=touriste" class="nav-item ">
+        <nav class="nav-vertical">
+            <a href="Route?page=touriste" class="nav-item">
                 <i class="fas fa-home"></i>
                 <span>Accueil</span>
             </a>
@@ -338,141 +145,154 @@
                 <i class="fas fa-user"></i>
                 <span>Profil</span>
             </a>
+           <a href="LogoutController" class="nav-item">
+    <i class="fas fa-sign-out-alt"></i>
+    <span>Déconnexion</span>
+</a>
         </nav>
-
+        
         <!-- Main Content -->
         <main class="main-content">
-            <!-- Header -->
-            <div class="profile-header">
-                <div class="page-title">
-                    <h1>Mon Profil</h1>
-                    <p>Gérez vos informations personnelles et vos préférences</p>
-                </div>
-            </div>
+            <div class="profile-card">
+                <form action="TouristeProfilController" method="POST" onsubmit="return validateForm()">
+                    <!-- Messages d'alerte -->
+                    <% 
+                        String success = (String) session.getAttribute("success");
+                        String error = (String) session.getAttribute("error");
+                        Integer successDuration = (Integer) session.getAttribute("successDuration");
+                        
+                        if (success != null && !success.isEmpty()) { 
+                            session.removeAttribute("success");
+                            session.removeAttribute("successDuration");
+                    %>
+                        <div class="alert alert-success alert-dismissible fade show" 
+                             <% if (successDuration != null && successDuration > 0) { %>data-bs-autohide="true" data-bs-delay="<%= successDuration %>"<% } %>>
+                            <i class="fas fa-check-circle me-2"></i><%= success %>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    <% 
+                        } 
+                        if (error != null && !error.isEmpty()) { 
+                            session.removeAttribute("error");
+                    %>
+                        <div class="alert alert-danger alert-dismissible fade show">
+                            <i class="fas fa-exclamation-circle me-2"></i><%= error %>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    <% } %>
 
-            <!-- Profile Container -->
-            <div class="profile-container">
-                <!-- Sidebar -->
-                <aside class="profile-sidebar">
-                    <div class="profile-avatar">
-                        <img src="https://ui-avatars.com/api/?name=Jean+Dupont&background=00A896&color=fff" alt="Avatar">
+                    <!-- En-tête du profil -->
+                    <div class="profile-header">
+                        <% 
+                            Touriste touriste = (Touriste) session.getAttribute("touriste");
+                            String nomComplet = (touriste != null) ? touriste.getNom() : "Utilisateur";
+                            String email = (touriste != null) ? touriste.getEmail() : "";
+                        %>
+                        <img src="https://ui-avatars.com/api/?name=<%= nomComplet %>&background=00A896&color=fff" 
+                             alt="Avatar" class="profile-avatar">
+                        <h3><%= nomComplet %></h3>
+                        <p>Compte touriste</p>
                     </div>
-                    
-                    <div class="profile-info">
-                        <h2 class="profile-name">Jean Dupont</h2>
-                        <div class="profile-location">
-                            <i class="fas fa-map-marker-alt"></i>
-                            Paris, France
-                        </div>
-                    </div>
-                    
-                    <div class="profile-stats">
-                        <div class="stat-item">
-                            <div class="stat-value">12</div>
-                            <div class="stat-label">Activités</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-value">4.8</div>
-                            <div class="stat-label">Note</div>
-                        </div>
-                    </div>
-                    
-                    <ul class="profile-menu">
-                        <li>
-                            <a href="#" class="active">
-                                <i class="fas fa-user-circle"></i>
-                                Informations
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <i class="fas fa-lock"></i>
-                                Sécurité
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <i class="fas fa-heart"></i>
-                                Favoris
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <i class="fas fa-bell"></i>
-                                Notifications
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <i class="fas fa-cog"></i>
-                                Préférences
-                            </a>
-                        </li>
-                    </ul>
-                </aside>
 
-                <!-- Profile Content -->
-                <div class="profile-content">
-                    <h2 class="section-title">
-                        <i class="fas fa-user-circle"></i>
-                        Informations personnelles
-                    </h2>
-                    
-                    <form>
+                    <!-- Corps du formulaire -->
+                    <div class="p-4">
+                        <h4 class="mb-4"><i class="fas fa-user-circle me-2"></i>Informations personnelles</h4>
+                        
                         <div class="form-group">
-                            <label for="name" class="form-label">Nom complet</label>
-                            <input type="text" id="name" class="form-control" value="Jean Dupont">
+                            <label class="form-label">Nom complet</label>
+                            <input type="text" class="form-control" name="nom" 
+                                   value="<%= nomComplet %>" required>
                         </div>
                         
                         <div class="form-group">
-                            <label for="email" class="form-label">Adresse email</label>
-                            <input type="email" id="email" class="form-control" value="jean.dupont@example.com">
+                            <label class="form-label">Email</label>
+                            <input type="email" class="form-control" name="email" 
+                                   value="<%= email %>" required>
                         </div>
+
+                        <h4 class="mt-5 mb-4"><i class="fas fa-lock me-2"></i>Changer le mot de passe</h4>
                         
                         <div class="form-group">
-                            <label for="phone" class="form-label">Téléphone</label>
-                            <input type="tel" id="phone" class="form-control" value="+33 6 12 34 56 78">
+                            <label class="form-label">Mot de passe actuel</label>
+                            <input type="password" class="form-control" name="currentPassword" id="currentPassword">
+                            <small class="text-muted">Laissez vide si vous ne souhaitez pas changer</small>
                         </div>
                         
-                        <div class="form-group">
-                            <label for="birthdate" class="form-label">Date de naissance</label>
-                            <input type="date" id="birthdate" class="form-control" value="1985-05-15">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="form-label">Nouveau mot de passe</label>
+                                    <input type="password" class="form-control" name="newPassword" id="newPassword">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="form-label">Confirmer</label>
+                                    <input type="password" class="form-control" name="confirmPassword" id="confirmPassword">
+                                </div>
+                            </div>
                         </div>
-                        
-                        <div class="form-group">
-                            <label for="address" class="form-label">Adresse</label>
-                            <input type="text" id="address" class="form-control" value="15 Rue de la République">
+
+                        <div class="text-end mt-4">
+                            <button type="submit" class="btn btn-save px-4">
+                                <i class="fas fa-save me-1"></i> Enregistrer les modifications
+                            </button>
                         </div>
-                        
-                        <div class="form-group">
-                            <label for="city" class="form-label">Ville</label>
-                            <input type="text" id="city" class="form-control" value="Paris">
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="country" class="form-label">Pays</label>
-                            <select id="country" class="form-control">
-                                <option value="FR" selected>France</option>
-                                <option value="BE">Belgique</option>
-                                <option value="CH">Suisse</option>
-                                <option value="CA">Canada</option>
-                            </select>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="bio" class="form-label">À propos de moi</label>
-                            <textarea id="bio" class="form-control" rows="4">Passionné de voyages et d'aventures, j'aime découvrir de nouvelles cultures et paysages à travers le monde.</textarea>
-                        </div>
-                        
-                        <button type="submit" class="btn-save">
-                            <i class="fas fa-save"></i> Enregistrer les modifications
-                        </button>
-                    </form>
-                </div>
+                    </div>
+                </form>
             </div>
         </main>
 
-        <!-- Bootstrap Bundle with Popper -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+        <script>
+            function validateForm() {
+                const currentPassword = document.getElementById('currentPassword').value;
+                const newPassword = document.getElementById('newPassword').value;
+                const confirmPassword = document.getElementById('confirmPassword').value;
+                
+                if (currentPassword || newPassword || confirmPassword) {
+                    if (!currentPassword || !newPassword || !confirmPassword) {
+                        alert('Pour changer le mot de passe, veuillez remplir tous les champs');
+                        return false;
+                    }
+                    
+                    if (newPassword !== confirmPassword) {
+                        alert('Les nouveaux mots de passe ne correspondent pas');
+                        return false;
+                    }
+                    
+                    if (newPassword.length < 6) {
+                        alert('Le mot de passe doit contenir au moins 6 caractères');
+                        return false;
+                    }
+                }
+                
+                return true;
+            }
+            
+            // Auto-dismiss success alerts after delay
+            document.addEventListener('DOMContentLoaded', function() {
+                const alerts = document.querySelectorAll('.alert[data-bs-autohide="true"]');
+                alerts.forEach(function(alert) {
+                    const delay = parseInt(alert.getAttribute('data-bs-delay')) || 5000;
+                    setTimeout(function() {
+                        const bsAlert = new bootstrap.Alert(alert);
+                        bsAlert.close();
+                    }, delay);
+                });
+                
+                // Scroll vers le haut pour voir les messages
+                if (document.querySelector('.alert')) {
+                    window.scrollTo(0, 0);
+                }
+                
+                // Effacer les champs de mot de passe après soumission réussie
+                if (document.querySelector('.alert-success')) {
+                    document.getElementById('currentPassword').value = '';
+                    document.getElementById('newPassword').value = '';
+                    document.getElementById('confirmPassword').value = '';
+                }
+            });
+        </script>
     </body>
 </html>
